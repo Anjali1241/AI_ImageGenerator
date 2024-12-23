@@ -23,9 +23,9 @@
 }
 .search-box {
   display: flex;
-  width: 1000px;
-  height: 95px;
-  justify-content: space-around;
+  width: 700px;
+  height: 75px;
+  justify-content: space-between;
   align-items: center;
   border-radius: 50px;
   background: #1f3540;
@@ -38,6 +38,23 @@
     outline:none;
     font-size:18px;
     color:white;
-padding-left:35px;
-margin-right: 35px
+padding:0px 30px;
+margin-right: 10px
+}
+
+.search-input::placeholder{
+    color:#999
+}
+.generate-btn{
+    display:flex;
+    align-items:canter;
+justify-content:center;
+widht:600px;
+height:50px;
+font-size:20px;
+border-radius:50px;
+background:#cccccc;
+cursor:pointer;
+padding-left:30px
+
 }
