@@ -1,14 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import "./ImageGenerator.css";
 import defaultImage from "../Assets/DefaultImage.jpeg";
 import OpenAI from "openai";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import loadingImage from "../Assets/loading.gif";
 const ImageGenerator = () => {
   const [imageUrl, setImageUrl] = useState(defaultImage);
   const [loading, setLoading] = useState(false);
-  const inputRef = useRef(null);
+  const [inputValue, setInputValue] = useState("");
 
   const openai = new OpenAI({
     apiKey: import.meta.env.VITE_OPENAI_API_KEY,
@@ -16,20 +16,19 @@ const ImageGenerator = () => {
   });
 
   const generateImage = async () => {
-    if (inputRef.current.value === "") {
+    if (inputValue === "") {
       return;
     }
-    console.log("---->", inputRef.current.value);
     setLoading(true);
     try {
       const response = await openai.images.generate({
-        prompt: inputRef.current.value,
+        prompt: inputValue,
         n: 1,
         size: "1024x1024",
       });
       setImageUrl(response.data[0].url);
     } catch (error) {
-      inputRef.current.value = "";
+      setInputValue("");
       console.error("Error generating image:", error);
       if (error.message.includes("Billing hard limit has been reached")) {
         toast.error(
@@ -54,7 +53,7 @@ const ImageGenerator = () => {
       <div className="image-loading">
         <div className="image">
           <img
-            src={loading ? "/path/to/loading.gif" : imageUrl}
+            src={loading ? loadingImage : imageUrl}
             alt="Generated or default"
           />
         </div>
@@ -64,7 +63,8 @@ const ImageGenerator = () => {
           type="text"
           className="search-input"
           placeholder="Write what you want"
-          ref={inputRef}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
         />
         <button className="generate-btn" onClick={generateImage}>
           {loading ? "Generating..." : "Generate Image"}

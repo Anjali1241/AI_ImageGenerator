@@ -47,7 +47,7 @@ margin-right: 10px
 }
 .generate-btn{
     display:flex;
-    align-items:canter;
+    align-items:center;
 justify-content:center;
 widht:600px;
 height:50px;
@@ -57,4 +57,7 @@ background:#cccccc;
 cursor:pointer;
 padding-left:30px
 
+}
+img{
+  height:350px
 }
